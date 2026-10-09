@@ -294,9 +294,9 @@ button:disabled {
     overflow: hidden;
     padding: 28px 30px;
     border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, #0f172a 0%, #172554 55%, #1d4ed8 100%);
+    background: linear-gradient(135deg, #be185d 0%, #db2777 50%, #f472b6 100%);
     color: #fff;
-    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.15);
+    box-shadow: 0 15px 40px rgba(219, 39, 119, 0.25);
 }
 
 .hero-content {
@@ -314,7 +314,7 @@ button:disabled {
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.8px;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .hero-card h2 {
@@ -325,14 +325,14 @@ button:disabled {
 
 .hero-card h2 span {
     margin-left: 6px;
-    color: #93c5fd;
+    color: #fce7f3;
 }
 
 .hero-card p {
     margin-top: 8px;
     max-width: 60ch;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.88);
 }
 
 .hero-decoration {
@@ -351,7 +351,7 @@ button:disabled {
 
 .circle-1 { width: 90px;  height: 90px;  right: 0;    top: -10px; }
 .circle-2 { width: 60px;  height: 60px;  right: 70px; top: 40px; }
-.circle-3 { width: 36px;  height: 36px;  right: 30px; top: 70px; background: rgba(147, 197, 253, 0.25); }
+.circle-3 { width: 36px;  height: 36px;  right: 30px; top: 70px; background: rgba(252, 231, 243, 0.35); }
 
 /* =========================================================
    TARJETAS DE SECCIÓN

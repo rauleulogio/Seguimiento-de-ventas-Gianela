@@ -8,8 +8,8 @@
     <meta name="description" content="Panel de control de ventas, productividad por canal y proyección de comisiones.">
     <meta name="theme-color" content="#2563eb">
 
-    <link rel="stylesheet" href="style.css?v=20261008e">
-    <script src="script.js?v=20261008e" defer></script>
+    <link rel="stylesheet" href="style.css?v=20261009b">
+    <script src="script.js?v=20261009b" defer></script>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
             <div class="brand-logo">S</div>
 
             <div>
-                <h1>SEGUIMIENTO DE VENTAS</h1>
+                <h1>SEGUIMIENTO DE VENTAS OSCARIÑO</h1>
                 <p>Gestión comercial</p>
             </div>
         </div>
@@ -259,6 +259,24 @@
             </article>
 
 
+            <article class="main-kpi-card kpi-purple">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">OBSERVADAS</span>
+                    <div class="kpi-icon icon-purple" aria-hidden="true">!</div>
+                </div>
+
+                <div class="kpi-number" id="kpiObserved">
+                    0
+                </div>
+
+                <p class="kpi-description">
+                    Ventas observadas
+                </p>
+
+            </article>
+
+
             <article class="main-kpi-card kpi-red">
 
                 <div class="kpi-top">
@@ -391,6 +409,27 @@
                     </div>
 
                     <strong id="analyticsProgressPct">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-row">
+
+                    <div class="analytics-label">
+                        <span class="legend-dot dot-purple"></span>
+                        Observadas
+                    </div>
+
+                    <div class="analytics-track">
+                        <div
+                            id="analyticsBarObserved"
+                            class="analytics-fill fill-purple"
+                        ></div>
+                    </div>
+
+                    <strong id="analyticsObservedPct">
                         0%
                     </strong>
 

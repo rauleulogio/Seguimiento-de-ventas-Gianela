@@ -1321,7 +1321,7 @@ button:disabled {
     grid-column: 1 / -1;
 }
 
-/* Pantallas anchas: 4 cajas arriba y 3 abajo (Tableau, Multipedido, Total) */
+/* Pantallas anchas: 4 cajas arriba y 3 abajo (Tableu, Multipedido, Total) */
 @media (min-width: 901px) {
     .projection-breakdown {
         grid-template-columns: repeat(12, minmax(0, 1fr));

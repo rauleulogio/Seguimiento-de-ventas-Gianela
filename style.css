@@ -626,7 +626,7 @@ button:disabled {
 
 .main-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 16px;
 }
 
@@ -662,10 +662,15 @@ button:disabled {
     background: linear-gradient(135deg, #8f1d1d 0%, #d93535 100%);
 }
 
+.kpi-purple {
+    background: linear-gradient(135deg, #7e3fd1 0%, #b794f6 100%);
+}
+
 .kpi-blue,
 .kpi-green,
 .kpi-orange,
-.kpi-red {
+.kpi-red,
+.kpi-purple {
     border-color: transparent;
     color: #fff;
     box-shadow: 0 8px 20px rgba(16, 24, 40, 0.12);
@@ -674,28 +679,32 @@ button:disabled {
 .kpi-blue:hover,
 .kpi-green:hover,
 .kpi-orange:hover,
-.kpi-red:hover {
+.kpi-red:hover,
+.kpi-purple:hover {
     box-shadow: 0 12px 26px rgba(16, 24, 40, 0.18);
 }
 
 .kpi-blue .kpi-label,
 .kpi-green .kpi-label,
 .kpi-orange .kpi-label,
-.kpi-red .kpi-label {
+.kpi-red .kpi-label,
+.kpi-purple .kpi-label {
     color: rgba(255, 255, 255, 0.78);
 }
 
 .kpi-blue .kpi-number,
 .kpi-green .kpi-number,
 .kpi-orange .kpi-number,
-.kpi-red .kpi-number {
+.kpi-red .kpi-number,
+.kpi-purple .kpi-number {
     color: #fff;
 }
 
 .kpi-blue .kpi-description,
 .kpi-green .kpi-description,
 .kpi-orange .kpi-description,
-.kpi-red .kpi-description {
+.kpi-red .kpi-description,
+.kpi-purple .kpi-description {
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -734,6 +743,7 @@ button:disabled {
 .icon-green  { background: var(--green-soft);   color: var(--green); }
 .icon-orange { background: var(--orange-soft);  color: #b45309; }
 .icon-red    { background: var(--red-soft);     color: var(--red); }
+.icon-purple { background: var(--purple-soft);  color: var(--purple); }
 
 .kpi-number {
     margin-top: 14px;
@@ -855,6 +865,7 @@ button:disabled {
 .status-active    { color: #15803d; background: #dcfce7; }
 .status-progress  { color: #b45309; background: #fef3c7; }
 .status-cancelled { color: #b91c1c; background: #fee2e2; }
+.status-observed  { color: #6d28d9; background: #ede9fe; }
 .status-neutral   { color: #475467; background: #f2f4f7; }
 
 /* Estado vacío */
@@ -986,6 +997,7 @@ button:disabled {
 .dot-green  { background: var(--green); }
 .dot-orange { background: var(--orange); }
 .dot-red    { background: var(--red); }
+.dot-purple { background: var(--purple); }
 
 .analytics-track {
     height: 10px;
@@ -1004,6 +1016,7 @@ button:disabled {
 .fill-green  { background: var(--green); }
 .fill-orange { background: var(--orange); }
 .fill-red    { background: var(--red); }
+.fill-purple { background: var(--purple); }
 
 /* =========================================================
    MONITOREO POR CANAL
@@ -1670,9 +1683,21 @@ button:disabled {
         padding-right: 20px;
     }
 
-    .main-kpi-grid,
     .monitor-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Los 5 cuadros se mantienen en una sola fila; solo se compactan */
+    .main-kpi-grid {
+        gap: 12px;
+    }
+
+    .main-kpi-card {
+        padding: 16px;
+    }
+
+    .kpi-number {
+        font-size: 30px;
     }
 
     .projection-summary {
@@ -1695,6 +1720,32 @@ button:disabled {
 
     .monitor-grid {
         grid-template-columns: 1fr;
+    }
+
+    .main-kpi-grid {
+        gap: 8px;
+    }
+
+    .main-kpi-card {
+        padding: 12px;
+    }
+
+    .kpi-label {
+        font-size: 10px;
+    }
+
+    .kpi-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+    }
+
+    .kpi-number {
+        font-size: 24px;
+    }
+
+    .kpi-description {
+        font-size: 11px;
     }
 
     .hero-decoration {

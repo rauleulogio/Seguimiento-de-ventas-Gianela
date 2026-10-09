@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seguimiento de ventas | OCT 26</title>
+    <meta name="description" content="Panel de control de ventas, productividad por canal y proyección de comisiones.">
+    <meta name="theme-color" content="#2563eb">
+
+    <link rel="stylesheet" href="style.css?v=20261008e">
+    <script src="script.js?v=20261008e" defer></script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<div class="app-shell">
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-logo">S</div>
+
+            <div>
+                <h1>SEGUIMIENTO DE VENTAS</h1>
+                <p>Gestión comercial</p>
+            </div>
+        </div>
+
+        <div class="header-actions">
+
+            <div class="connection-status" role="status" aria-live="polite">
+                <span id="connectionDot" aria-hidden="true"></span>
+                <span id="connectionStatus">Conectando...</span>
+            </div>
+
+            <span id="lastUpdate">--</span>
+
+            <button id="refreshButton" class="btn btn-primary" type="button">
+                <span aria-hidden="true">↻</span> Actualizar
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+    <main class="page-content" id="main">
+
+        <!-- HERO -->
+        <section class="hero-card">
+
+            <div class="hero-content">
+
+                <div>
+                    <span class="eyebrow">PANEL COMERCIAL</span>
+
+                    <h2>
+                        Control de ventas
+                        <span>OCT 26</span>
+                    </h2>
+
+                    <p>
+                        Seguimiento de ventas, estados, productividad
+                        y proyección de comisiones.
+                    </p>
+                </div>
+
+                <div class="hero-decoration" aria-hidden="true">
+                    <div class="hero-circle circle-1"></div>
+                    <div class="hero-circle circle-2"></div>
+                    <div class="hero-circle circle-3"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FILTROS
+        ====================================================== -->
+        <section class="section-card filters-card">
+
+            <div class="section-title-row">
+
+                <div>
+                    <span class="section-kicker">CONTROL</span>
+                    <h3>Buscar y filtrar ventas</h3>
+                </div>
+
+                <button id="clearFilters" class="btn btn-secondary" type="button">
+                    Limpiar filtros
+                </button>
+
+            </div>
+
+            <div class="filters-toolbar">
+
+                <div class="field field-search">
+
+                    <label for="searchInput">
+                        Buscar
+                    </label>
+
+                    <div class="input-with-icon">
+                        <span aria-hidden="true">⌕</span>
+
+                        <input
+                            type="search"
+                            id="searchInput"
+                            autocomplete="off"
+                            placeholder="DNI, nombre, orden OT, vendedor..."
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="filters-menu">
+
+                    <button
+                        id="filtersToggle"
+                        class="btn btn-secondary filters-toggle"
+                        type="button"
+                        aria-haspopup="dialog"
+                        aria-expanded="false"
+                        aria-controls="filtersPanel"
+                    >
+                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>
+                        Filtros
+                        <span id="filtersBadge" class="filters-badge" hidden>0</span>
+                    </button>
+
+                    <div
+                        id="filtersPanel"
+                        class="filters-panel"
+                        role="dialog"
+                        aria-label="Filtros avanzados"
+                        hidden
+                    >
+
+                        <div class="filters-panel-header">
+                            <h4>Filtros avanzados</h4>
+
+                            <button
+                                id="filtersReset"
+                                class="link-button"
+                                type="button"
+                            >
+                                Limpiar todos
+                            </button>
+                        </div>
+
+                        <!-- Los campos los genera script.js -->
+                        <div
+                            class="filters-panel-body"
+                            id="advancedFilters"
+                        ></div>
+
+                        <div class="filters-panel-footer">
+                            <button
+                                id="filtersCancel"
+                                class="btn btn-secondary"
+                                type="button"
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                id="filtersApply"
+                                class="btn btn-primary"
+                                type="button"
+                            >
+                                Aplicar
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="active-filters"
+                id="activeFilters"
+                aria-label="Filtros activos"
+            ></div>
+
+        </section>
+
+
+        <!-- =====================================================
+             KPIs PRINCIPALES
+        ====================================================== -->
+        <section class="main-kpi-grid">
+
+            <article class="main-kpi-card kpi-blue">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">TOTAL VENTAS</span>
+                    <div class="kpi-icon icon-blue" aria-hidden="true">▦</div>
+                </div>
+
+                <div class="kpi-number" id="kpiTotal">
+                    0
+                </div>
+
+                <p class="kpi-description">
+                    Ventas registradas
+                </p>
+
+            </article>
+
+
+            <article class="main-kpi-card kpi-green">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">ACTIVAS</span>
+                    <div class="kpi-icon icon-green" aria-hidden="true">✓</div>
+                </div>
+
+                <div class="kpi-number" id="kpiActive">
+                    0
+                </div>
+
+                <p class="kpi-description">
+                    Ventas activas
+                </p>
+
+            </article>
+
+
+            <article class="main-kpi-card kpi-orange">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">EN PROGRESO</span>
+                    <div class="kpi-icon icon-orange" aria-hidden="true">◔</div>
+                </div>
+
+                <div class="kpi-number" id="kpiProgress">
+                    0
+                </div>
+
+                <p class="kpi-description">
+                    Pendientes de gestión
+                </p>
+
+            </article>
+
+
+            <article class="main-kpi-card kpi-red">
+
+                <div class="kpi-top">
+                    <span class="kpi-label">CANCELADAS</span>
+                    <div class="kpi-icon icon-red" aria-hidden="true">×</div>
+                </div>
+
+                <div class="kpi-number" id="kpiCancelled">
+                    0
+                </div>
+
+                <p class="kpi-description">
+                    Ventas canceladas
+                </p>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             TABLA
+        ====================================================== -->
+        <section class="section-card">
+
+            <div class="section-title-row">
+
+                <div>
+                    <span class="section-kicker">VENTAS</span>
+                    <h3>Registro de ventas</h3>
+                </div>
+
+                <div class="record-counter">
+                    <span id="paginationInfo">
+                        0 registros
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="table-container" tabindex="0" role="region" aria-label="Tabla de ventas">
+
+                <table class="sales-table">
+
+                    <thead id="tableHead"></thead>
+
+                    <tbody id="tableBody"></tbody>
+
+                </table>
+
+            </div>
+
+
+            <div
+                id="tableEmpty"
+                class="empty-state"
+                hidden
+            >
+                <div class="empty-icon" aria-hidden="true">⌕</div>
+
+                <h4 id="tableEmptyTitle">No se encontraron ventas</h4>
+
+                <p id="tableEmptyText">
+                    Prueba cambiando los filtros o la búsqueda.
+                </p>
+            </div>
+
+
+            <nav class="pagination" id="pagination" aria-label="Paginación de ventas"></nav>
+
+        </section>
+
+
+        <!-- =====================================================
+             DISTRIBUCIÓN
+        ====================================================== -->
+        <section class="section-card">
+
+            <div class="section-title-row">
+
+                <div>
+                    <span class="section-kicker">ANÁLISIS</span>
+                    <h3>Distribución de ventas</h3>
+                </div>
+
+                <div class="analytics-total">
+                    <strong id="analyticsTotal">0</strong>
+                    <span>ventas filtradas</span>
+                </div>
+
+            </div>
+
+
+            <div class="analytics-list">
+
+                <div class="analytics-row">
+
+                    <div class="analytics-label">
+                        <span class="legend-dot dot-green"></span>
+                        Activas
+                    </div>
+
+                    <div class="analytics-track">
+                        <div
+                            id="analyticsBarActive"
+                            class="analytics-fill fill-green"
+                        ></div>
+                    </div>
+
+                    <strong id="analyticsActivePct">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-row">
+
+                    <div class="analytics-label">
+                        <span class="legend-dot dot-orange"></span>
+                        En progreso
+                    </div>
+
+                    <div class="analytics-track">
+                        <div
+                            id="analyticsBarProgress"
+                            class="analytics-fill fill-orange"
+                        ></div>
+                    </div>
+
+                    <strong id="analyticsProgressPct">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-row">
+
+                    <div class="analytics-label">
+                        <span class="legend-dot dot-red"></span>
+                        Canceladas
+                    </div>
+
+                    <div class="analytics-track">
+                        <div
+                            id="analyticsBarCancelled"
+                            class="analytics-fill fill-red"
+                        ></div>
+                    </div>
+
+                    <strong id="analyticsCancelledPct">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             MONITOREO DE KPIs
+        ====================================================== -->
+        <section class="section-card">
+
+            <div class="section-title-row">
+
+                <div>
+                    <span class="section-kicker">PRODUCTIVIDAD</span>
+                    <h3>Monitoreo de indicadores</h3>
+                </div>
+
+                <span class="section-note">
+                    Actualizado automáticamente
+                </span>
+
+            </div>
+
+
+            <div class="monitor-grid">
+
+                <!-- ================= TIENDA ================= -->
+                <article class="monitor-card monitor-blue">
+
+                    <div class="monitor-header">
+
+                        <div>
+                            <span class="monitor-tag">CANAL</span>
+                            <h4>Ventas tienda</h4>
+                        </div>
+
+                        <span class="monitor-badge">
+                            TIENDA
+                        </span>
+
+                    </div>
+
+
+                    <div class="monitor-content">
+
+                        <div class="monitor-table">
+
+                            <div class="monitor-line">
+                                <span>Activas</span>
+
+                                <strong id="tiendaActivasQ">
+                                    0
+                                </strong>
+
+                                <small id="tiendaActivasPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line">
+                                <span>Canceladas</span>
+
+                                <strong id="tiendaNoRecogeQ">
+                                    0
+                                </strong>
+
+                                <small id="tiendaNoRecogePct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line">
+                                <span>En progreso</span>
+
+                                <strong id="tiendaProgresoQ">
+                                    0
+                                </strong>
+
+                                <small id="tiendaProgresoPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line monitor-highlight">
+                                <span>Efectividad</span>
+
+                                <strong id="tiendaEfectividadQ">
+                                    0
+                                </strong>
+
+                                <small id="tiendaEfectividadPct">
+                                    0%
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="pie-group">
+
+                            <div
+                                id="chartTienda"
+                                class="pie-3d pie-blue"
+                            >
+
+                                <div class="pie-inner">
+                                    <strong class="pie-value">
+                                        0%
+                                    </strong>
+
+                                    <span class="pie-label">
+                                        ACTIVAS
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="chartTiendaTotal"
+                                class="pie-3d pie-gray"
+                            >
+
+                                <div class="pie-inner">
+                                    <strong class="pie-value">
+                                        0
+                                    </strong>
+
+                                    <span class="pie-label">
+                                        TOTAL
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ================= MULTIPEDIDO ================= -->
+                <article class="monitor-card monitor-purple">
+
+                    <div class="monitor-header">
+
+                        <div>
+                            <span class="monitor-tag">TIPO</span>
+                            <h4>Multipedido</h4>
+                        </div>
+
+                        <span class="monitor-badge">
+                            MULTI
+                        </span>
+
+                    </div>
+
+
+                    <div class="monitor-content">
+
+                        <div class="monitor-table">
+
+                            <div class="monitor-line">
+                                <span>Activas</span>
+
+                                <strong id="multiActivasQ">
+                                    0
+                                </strong>
+
+                                <small id="multiActivasPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line">
+                                <span>Canceladas</span>
+
+                                <strong id="multiCanceladasQ">
+                                    0
+                                </strong>
+
+                                <small id="multiCanceladasPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line">
+                                <span>En progreso</span>
+
+                                <strong id="multiProgresoQ">
+                                    0
+                                </strong>
+
+                                <small id="multiProgresoPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line monitor-highlight">
+                                <span>Total</span>
+
+                                <strong id="multiTotalQ">
+                                    0
+                                </strong>
+
+                                <small id="multiTotalPct">
+                                    0%
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="pie-group">
+
+                            <div
+                                id="chartMulti"
+                                class="pie-3d pie-purple"
+                            >
+
+                                <div class="pie-inner">
+                                    <strong class="pie-value">
+                                        0%
+                                    </strong>
+
+                                    <span class="pie-label">
+                                        ACTIVAS
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="chartMultiTotal"
+                                class="pie-3d pie-gray"
+                            >
+
+                                <div class="pie-inner">
+                                    <strong class="pie-value">
+                                        0
+                                    </strong>
+
+                                    <span class="pie-label">
+                                        TOTAL
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ================= DELIVERY ================= -->
+                <article class="monitor-card monitor-green">
+
+                    <div class="monitor-header">
+
+                        <div>
+                            <span class="monitor-tag">CANAL</span>
+                            <h4>Ventas delivery</h4>
+                        </div>
+
+                        <span class="monitor-badge">
+                            DELIVERY
+                        </span>
+
+                    </div>
+
+
+                    <div class="monitor-content">
+
+                        <div class="monitor-table">
+
+                            <div class="monitor-line">
+                                <span>Activas</span>
+
+                                <strong id="deliveryActivasQ">
+                                    0
+                                </strong>
+
+                                <small id="deliveryActivasPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line">
+                                <span>Canceladas</span>
+
+                                <strong id="deliveryCanceladasQ">
+                                    0
+                                </strong>
+
+                                <small id="deliveryCanceladasPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line">
+                                <span>En progreso</span>
+
+                                <strong id="deliveryProgresoQ">
+                                    0
+                                </strong>
+
+                                <small id="deliveryProgresoPct">
+                                    0%
+                                </small>
+                            </div>
+
+
+                            <div class="monitor-line monitor-highlight">
+                                <span>Efectividad</span>
+
+                                <strong id="deliveryTotalQ">
+                                    0
+                                </strong>
+
+                                <small id="deliveryEfectividadPct">
+                                    0%
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="pie-group">
+
+                            <div
+                                id="chartDelivery"
+                                class="pie-3d pie-green"
+                            >
+
+                                <div class="pie-inner">
+                                    <strong class="pie-value">
+                                        0%
+                                    </strong>
+
+                                    <span class="pie-label">
+                                        ACTIVAS
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="chartDeliveryTotal"
+                                class="pie-3d pie-gray"
+                            >
+
+                                <div class="pie-inner">
+                                    <strong class="pie-value">
+                                        0
+                                    </strong>
+
+                                    <span class="pie-label">
+                                        TOTAL
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- ================= TABLEAU ================= -->
+                <article class="monitor-card monitor-orange">
+
+                    <div class="monitor-header">
+
+                        <div>
+                            <span class="monitor-tag">CONVERSIÓN</span>
+                            <h4>Tableau</h4>
+                        </div>
+
+                        <span class="monitor-badge">
+                            ÓRDENES OT
+                        </span>
+
+                    </div>
+
+
+                    <div class="monitor-content">
+
+                        <div class="monitor-table">
+
+                            <div class="monitor-line">
+                                <span>Activas</span>
+                                <strong id="tableauActivasQ">0</strong>
+                                <small id="tableauActivasPct">0%</small>
+                            </div>
+
+                            <div class="monitor-line">
+                                <span>Canceladas</span>
+                                <strong id="tableauCanceladasQ">0</strong>
+                                <small id="tableauCanceladasPct">0%</small>
+                            </div>
+
+                            <div class="monitor-line">
+                                <span>En progreso</span>
+                                <strong id="tableauProgresoQ">0</strong>
+                                <small id="tableauProgresoPct">0%</small>
+                            </div>
+
+                            <div class="monitor-line monitor-highlight">
+                                <span>Total OT</span>
+                                <strong id="tableauTotalQ">0</strong>
+                                <small id="tableauTotalPct">0%</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="pie-group">
+
+                            <div id="chartTableau" class="pie-3d pie-orange">
+                                <div class="pie-inner">
+                                    <strong class="pie-value">0%</strong>
+                                    <span class="pie-label">ACTIVAS</span>
+                                </div>
+                            </div>
+
+                            <div id="chartTableauTotal" class="pie-3d pie-gray">
+                                <div class="pie-inner">
+                                    <strong class="pie-value">0</strong>
+                                    <span class="pie-label">TOTAL OT</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PROYECCIÓN DE COMISIONES
+        ====================================================== -->
+        <section class="section-card projection-section">
+
+            <div class="section-title-row">
+
+                <div>
+                    <span class="section-kicker">COMISIONES</span>
+                    <h3>Proyección de comisión</h3>
+                </div>
+
+                <span class="section-note">
+                    Calculada sobre ventas activas
+                </span>
+
+            </div>
+
+
+            <div class="projection-summary">
+
+                <div class="projection-main">
+
+                    <span>
+                        COMISIÓN ESTIMADA
+                    </span>
+
+                    <strong id="projectionTotal">
+                        S/ 0.00
+                    </strong>
+
+                    <small id="projectionNote">
+                        Esperando datos...
+                    </small>
+
+                </div>
+
+
+                <div class="projection-stat">
+
+                    <span>Ventas activas</span>
+
+                    <strong id="projectionActiveSales">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="projection-stat">
+
+                    <span>Rango actual</span>
+
+                    <strong id="projectionCurrentRange">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="projection-stat">
+
+                    <span id="projectionMissingLabel">Faltan para Rango 11</span>
+
+                    <strong id="projectionMissingRange">
+                        200
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESO -->
+            <div class="range-progress">
+
+                <div class="range-progress-header">
+
+                    <div>
+                        <strong id="rangeProgressTitle">
+                            Progreso hacia Rango 11
+                        </strong>
+
+                        <span id="rangeProgressText">
+                            0 de 200 ventas
+                        </span>
+                    </div>
+
+                    <strong id="rangeProgressCurrent">
+                        0 / 200
+                    </strong>
+
+                </div>
+
+
+                <div class="range-progress-track" id="rangeProgressTrack" role="progressbar" aria-labelledby="rangeProgressTitle" aria-valuemin="0" aria-valuemax="200" aria-valuenow="0">
+
+                    <div
+                        id="rangeProgressBar"
+                        class="range-progress-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESGLOSE -->
+            <div class="projection-breakdown">
+
+                <div class="commission-box">
+
+                    <span>POS MONO</span>
+
+                    <strong id="projectionPos">
+                        S/ 0.00
+                    </strong>
+
+                    <div class="commission-detail">
+                        <span class="commission-alcance" id="projectionPosCount">
+                            0 ventas
+                        </span>
+
+                        <span class="commission-effect effect-price" id="projectionPosPrice">
+                            S/ 0.00 c/u
+                        </span>
+                    </div>
+
+                    <small id="projectionPosNote">
+                        Calculando...
+                    </small>
+
+                </div>
+
+
+                <div class="commission-box">
+
+                    <span>ALTA</span>
+
+                    <strong id="projectionAlta">
+                        S/ 0.00
+                    </strong>
+
+                    <div class="commission-detail">
+                        <span class="commission-alcance" id="projectionAltaCount">
+                            0 ventas
+                        </span>
+
+                        <span class="commission-effect effect-price" id="projectionAltaPrice">
+                            S/ 0.00 c/u
+                        </span>
+                    </div>
+
+                    <small id="projectionAltaNote">
+                        Calculando...
+                    </small>
+
+                </div>
+
+
+                <div class="commission-box">
+
+                    <span>PREPAGO</span>
+
+                    <strong id="projectionPrepago">
+                        S/ 0.00
+                    </strong>
+
+                    <div class="commission-detail">
+                        <span class="commission-alcance" id="projectionPrepagoCount">
+                            0 ventas
+                        </span>
+
+                        <span class="commission-effect effect-price" id="projectionPrepagoPrice">
+                            S/ 0.00 c/u
+                        </span>
+                    </div>
+
+                    <small id="projectionPrepagoNote">
+                        Calculando...
+                    </small>
+
+                </div>
+
+
+                <div class="commission-box">
+
+                    <span>MULTI</span>
+
+                    <strong id="projectionMulti">
+                        S/ 0.00
+                    </strong>
+
+                    <div class="commission-detail">
+                        <span class="commission-alcance" id="projectionMultiCount">
+                            0 ventas
+                        </span>
+
+                        <span class="commission-effect effect-price" id="projectionMultiPrice">
+                            S/ 0.00 c/u
+                        </span>
+                    </div>
+
+                    <small id="projectionMultiNote">
+                        Calculando...
+                    </small>
+
+                </div>
+
+
+                <div class="commission-box commission-box-adjust">
+
+                    <span>TABLEAU</span>
+
+                    <strong id="projectionTableau">
+                        S/ 0.00
+                    </strong>
+
+                    <div class="commission-detail">
+                        <span class="commission-alcance" id="projectionTableauAlcance">
+                            Alcance: —
+                        </span>
+
+                        <span class="commission-effect" id="projectionTableauEffect"></span>
+                    </div>
+
+                    <small id="projectionTableauNote">
+                        Calculando...
+                    </small>
+
+                </div>
+
+
+                <div class="commission-box commission-box-adjust">
+
+                    <span>MULTIPEDIDO</span>
+
+                    <strong id="projectionMultipedido">
+                        S/ 0.00
+                    </strong>
+
+                    <div class="commission-detail">
+                        <span class="commission-alcance" id="projectionMultipedidoAlcance">
+                            Alcance: —
+                        </span>
+
+                        <span class="commission-effect" id="projectionMultipedidoEffect"></span>
+                    </div>
+
+                    <small id="projectionMultipedidoNote">
+                        Calculando...
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- TABLA DE COMISIONES -->
+            <div class="commission-table-wrapper">
+
+                <div class="commission-table-title">
+                    <h4>Tabla de comisiones por rango</h4>
+
+                    <span>
+                        Tarifario configurado
+                    </span>
+                </div>
+
+
+                <div class="table-container" tabindex="0" role="region" aria-label="Tabla de comisiones por rango">
+
+                    <table class="commission-table">
+
+                        <thead>
+
+                            <tr>
+                                <th scope="col">Rango</th>
+                                <th scope="col">POS MONO</th>
+                                <th scope="col">ALTA</th>
+                                <th scope="col">PREPAGO</th>
+                                <th scope="col">MULTI</th>
+                                <th scope="col">Desde</th>
+                                <th scope="col">Hasta</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="commissionTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =============================================================
+     PANEL DE DETALLE
+============================================================== -->
+<div
+    id="detailOverlay"
+    class="drawer-overlay"
+    hidden
+>
+
+    <aside
+        id="detailDrawer"
+        class="detail-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="detailTitle"
+    >
+
+        <div class="drawer-header">
+
+            <div>
+
+                <span class="drawer-kicker">
+                    DETALLE DE VENTA
+                </span>
+
+                <h3 id="detailTitle">
+                    Venta
+                </h3>
+
+                <p id="detailSubtitle">
+                    —
+                </p>
+
+            </div>
+
+            <button
+                id="closeDetail"
+                class="close-button"
+                type="button"
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="detailBody"
+            class="drawer-body"
+        ></div>
+
+    </aside>
+
+</div>
+
+
+<!-- =============================================================
+     TOAST
+============================================================== -->
+<div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+    hidden
+></div>
+
+</body>
+</html>
